@@ -20,7 +20,9 @@ just write your orbit controls method with a new operator and
 pass the camera and dom element that you want to control at UI
 */
 
-new OrbitControls(camera, renderer.domElement);
+const orbitcontrols = new OrbitControls(camera, renderer.domElement);
+orbitcontrols.addEventListener('change', render); // this render will be called to make the object iteracted when the animate function is stopped
+
 
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({
@@ -36,20 +38,23 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  render();
+  render(); // you can remove the render here if you want. But it is a good practice to call the render from here.
 }
 
-function animate() {
-  requestAnimationFrame(animate);
+// function animate() { // we can call this animate method to animate the cube created
+//   requestAnimationFrame(animate); // this ia browser inbuilt function to take the new animate function that will repaint the system in the time span.
+//   // usaually this method will be called 60 times per second in the modern browsers and will be paused when the user in another tab or hidden to 
+//     // decrease the load on the CPU and battery life
 
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+//   cube.rotation.x += 0.01;
+//   cube.rotation.y += 0.01;
 
-  render();
-}
+//   render(); // on every update of the objects position we have to renderer the object.
+// }
 
 function render() {
   renderer.render(scene, camera);
 }
 
-animate();
+// animate();
+render();

@@ -1,6 +1,11 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"; // orbit controls are used to control the entire object which is running on the browser
 
+// to show the stats to check the usability of your bwoser CPU and memory. You need to enable stats and this is only required
+// in development
+
+import Stats from 'three/examples/jsm/libs/stats.module';
+
 const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
@@ -21,6 +26,9 @@ pass the camera and dom element that you want to control at UI
 */
 
 new OrbitControls(camera, renderer.domElement);
+
+const stats = new Stats();
+document.body.appendChild(stats.dom);
 
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({
@@ -46,6 +54,7 @@ function animate() {
   cube.rotation.y += 0.01;
 
   render();
+  stats.update();
 }
 
 function render() {

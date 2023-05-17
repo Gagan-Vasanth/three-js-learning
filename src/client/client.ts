@@ -7,8 +7,10 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"; // or
 import Stats from "three/examples/jsm/libs/stats.module";
 
 import { GUI } from "lil-gui";
+import { AxesHelper } from "three";
 
 const scene = new THREE.Scene();
+scene.add(new AxesHelper(5));
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -53,9 +55,23 @@ document.body.appendChild(stats.dom);
 
 const gui = new GUI();
 const cubeFolder = gui.addFolder("Cube"); // create a new folder and add the object to it
-cubeFolder.add(cube.rotation, "x", 0, Math.PI * 3); // added rotation of the cube
-cubeFolder.add(cube.rotation, "y", 0, Math.PI * 3);
-cubeFolder.add(cube.rotation, "z", 0, Math.PI * 3);
+const cubeRotationFolder = cubeFolder.addFolder("Rotation");
+cubeRotationFolder.add(cube.rotation, "x", 0, Math.PI * 3); // added rotation of the cube
+cubeRotationFolder.add(cube.rotation, "y", 0, Math.PI * 3);
+cubeRotationFolder.add(cube.rotation, "z", 0, Math.PI * 3);
+cubeRotationFolder.open();
+
+const cubePositionFolder = cubeFolder.addFolder("Position");
+cubePositionFolder.add(cube.position, 'x', -10, 10, 0.1);
+cubePositionFolder.add(cube.position, "y", -10, 10, 0.1);
+cubePositionFolder.add(cube.position, "z", -10, 10, 0.1);
+cubePositionFolder.open();
+
+const cubeScaleFolder = cubeFolder.addFolder("Scale");
+cubeScaleFolder.add(cube.scale, "x", -5, 10);
+cubeScaleFolder.add(cube.scale, "y", -5, 10);
+cubeScaleFolder.add(cube.scale, "z", -5, 10);
+cubeScaleFolder.open();
 
 const cameraFolder = gui.addFolder("camera");
 cameraFolder.add(camera.position, "z", 0, 10); // added position of the cube
